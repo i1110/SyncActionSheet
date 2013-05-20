@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "SyncActionSheet.h"
 
 @interface ViewController ()
 
@@ -17,13 +18,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [button setTitle:@"Show Action Sheet" forState:UIControlStateNormal];
+    [button setFrame:CGRectMake(40, 200, 240, 50)];
+    [button addTarget:self action:@selector(showActionSheet:) forControlEvents:UIControlEventTouchUpInside];
+    [[self view] addSubview:button];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)showActionSheet:(id)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    SyncActionSheet *actionSheet = [[SyncActionSheet alloc] initWithTitle:@"Sync Action Sheet"
+                                                        otherButtonTitles:@[@"Button 1", @"Button 2", @"Cancel"]];
+    NSInteger buttonIndex = [actionSheet showInView:self.view];
+    [actionSheet release];
+    
+    NSLog(@"selected button index: %d", buttonIndex);
 }
 
 @end
